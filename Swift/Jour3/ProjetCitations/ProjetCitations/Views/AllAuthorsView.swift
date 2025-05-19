@@ -6,14 +6,13 @@ struct AllAuthorsView: View {
     var body: some View {
         NavigationStack {
             if model.isLoading {
-                ProgressView("Chargement…")
+                ProgressView("Chargement des auteurs...")
             } else if let error = model.errorMessage {
                 Text(error)
                     .foregroundColor(.red)
-                    .padding()
             } else {
                 List(model.authors) { author in
-                    NavigationLink(destination: AuthorQuotesView(author: author, allQuotes: model.allQuotes)) {
+                    NavigationLink(destination: AuthorQuotesView(authorName: author.name, quotes: model.quotesByAuthor[author.name] ?? [])) {
                         Text(author.name)
                     }
                 }
@@ -21,7 +20,9 @@ struct AllAuthorsView: View {
             }
         }
         .onAppear {
-            model.fetchQuotesAndAuthors()
+            if model.authors.isEmpty {
+                model.fetchAllAuthorsAndQuotes()
+            }
         }
     }
 }

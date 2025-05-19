@@ -1,15 +1,11 @@
 import SwiftUI
 
 struct AuthorQuotesView: View {
-    let author: Author
-    let allQuotes: [Quote]
-
-    var filteredQuotes: [Quote] {
-        allQuotes.filter { $0.author == author.name }
-    }
+    let authorName: String
+    let quotes: [Quote]
 
     var body: some View {
-        List(filteredQuotes, id: \.id) { quote in
+        List(quotes, id: \.id) { quote in
             VStack(alignment: .leading, spacing: 8) {
                 Text("“\(quote.quote)”")
                     .italic()
@@ -18,6 +14,6 @@ struct AuthorQuotesView: View {
                     .foregroundColor(.gray)
             }
         }
-        .navigationTitle(author.name)
+        .navigationTitle(authorName)
     }
 }
