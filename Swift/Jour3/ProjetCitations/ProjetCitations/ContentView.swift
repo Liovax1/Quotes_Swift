@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  ProjetCitations
-//
-//  Created by SDV Bordeaux on 14/05/2025.
-//
-
 import SwiftUI
 
 struct ContentView: View {

@@ -1,19 +1,27 @@
 import SwiftUI
 
 struct AllAuthorsView: View {
-    @State private var model = QuoteViewModel()
+    @State private var model = AllAuthorsViewModel()
 
     var body: some View {
         NavigationStack {
-            List(model.authors) { author in
-                NavigationLink(destination: AuthorQuotesView(authorName: author.name, allQuotes: model.history)) {
-                    Text(author.name)
+            if model.isLoading {
+                ProgressView("Chargement…")
+            } else if let error = model.errorMessage {
+                Text(error)
+                    .foregroundColor(.red)
+                    .padding()
+            } else {
+                List(model.authors) { author in
+                    NavigationLink(destination: AuthorQuotesView(author: author, allQuotes: model.allQuotes)) {
+                        Text(author.name)
+                    }
                 }
+                .navigationTitle("Tous les auteurs")
             }
-            .navigationTitle("Tous les auteurs")
         }
         .onAppear {
-            model.loadHistory()
+            model.fetchQuotesAndAuthors()
         }
     }
 }

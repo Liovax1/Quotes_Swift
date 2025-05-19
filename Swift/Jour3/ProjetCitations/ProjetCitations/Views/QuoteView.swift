@@ -2,6 +2,7 @@ import SwiftUI
 
 struct QuoteView: View {
     @State private var model = QuoteViewModel()
+    @Environment(\.modelContext) var modelContext
 
     var body: some View {
         VStack(spacing: 20) {
@@ -31,6 +32,9 @@ struct QuoteView: View {
             .background(Color.blue)
             .foregroundColor(.white)
             .cornerRadius(8)
+        }.onChange(of: model.quote) { _, newValue in
+            guard let newValue else { return }
+            modelContext.insert(newValue)
         }
         .padding()
         .onAppear {

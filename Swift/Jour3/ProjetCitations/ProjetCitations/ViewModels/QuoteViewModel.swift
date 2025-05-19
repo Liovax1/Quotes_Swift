@@ -7,6 +7,7 @@ import Observation
     var history: [Quote] = []
     var isLoading = false
     var errorMessage: String?
+    
 
     private let historyKey = "quoteHistory"
 
@@ -22,23 +23,24 @@ import Observation
         }
     }
 
-    private func saveToHistory(_ quote: Quote) {
-        guard !history.contains(where: { $0.quote == quote.quote && $0.author == quote.author }) else { return }
-        history.insert(quote, at: 0)
-        if history.count > 50 {
-            history = Array(history.prefix(50))
-        }
-        if let encoded = try? JSONEncoder().encode(history) {
-            UserDefaults.standard.set(encoded, forKey: historyKey)
-        }
-    }
+//    private func saveToHistory(_ quote: Quote) {
+//        guard !history.contains(where: { $0.quote == quote.quote && $0.author == quote.author }) else { return }
+//        history.insert(quote, at: 0)
+//        if history.count > 50 {
+//            history = Array(history.prefix(50))
+//        }
+//        if let encoded = try? JSONEncoder().encode(history) {
+//            UserDefaults.standard.set(encoded, forKey: historyKey)
+//            
+//        }
+//    }
 
     func fetchQuote() {
         Task {
             isLoading = true
             if let newQuote = await APIViewModel.fetchQuote() {
                 quote = newQuote
-                saveToHistory(newQuote)
+               // saveToHistory(newQuote)
             } else {
                 errorMessage = "Erreur lors de la génération de la citation."
             }

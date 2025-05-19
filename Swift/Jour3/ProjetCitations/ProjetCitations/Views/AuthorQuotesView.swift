@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct AuthorQuotesView: View {
-    let authorName: String
+    let author: Author
     let allQuotes: [Quote]
 
     var filteredQuotes: [Quote] {
-        allQuotes.filter { $0.author == authorName }
+        allQuotes.filter { $0.author == author.name }
     }
 
     var body: some View {
@@ -18,6 +18,6 @@ struct AuthorQuotesView: View {
                     .foregroundColor(.gray)
             }
         }
-        .navigationTitle(authorName)
+        .navigationTitle(author.name)
     }
 }
